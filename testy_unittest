@@ -1,0 +1,37 @@
+import unittest
+import json
+import requests
+from register import *
+
+class TestPogoda(unittest.TestCase):
+    def setUp(self):
+        self.weather_json =  json.loads(requests.get(
+    'http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b1b15e88fa797225412429c1c50c122a1').content.strip())
+        self.temp = self.weather_json['main']['temp']
+
+    # def sprawdz_temp(self):
+    #     self.assertIs(self.weather_json['main']['temp'], 'nie istnieje')
+
+
+    def test_format_temperatury(self):
+        temp = self.temp
+        self.assertLess(temp, 1000, "Temp wieksze od 0")
+
+    def test_polaczeni(self):
+        r = requests.get('http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b1b15e88fa797225412429c1c50c122a1')
+        self.assertEqual(r.status_code, 200, 'brak polaczenia')
+
+
+    # do bazy danych
+    def test_dodania_uzytkownika(self):
+        session = return_sqlalchemysession()
+
+        username = 'user'
+        password = 'password'
+        user = User(username, password)
+        session.add(user)
+        session.commit()
+
+        q = session.query(User).filter(User.username == username)
+        self.assertTrue(session.query(q.exists()).scalar(), 'fail')
+        session.close()
