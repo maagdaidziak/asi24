@@ -130,3 +130,9 @@ width: 50%;
   background-color:rgba(229, 231, 238, 0.082);
   color: black;
 }
+
+.pogoda {
+    background-color: #FF1212;
+    padding: 20px;
+    border-radius: 5px
+}
