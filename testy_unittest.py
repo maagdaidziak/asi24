@@ -1,6 +1,9 @@
 import unittest
 import json
 import requests
+
+import pogoda
+from main import powitanie, test2
 from register import *
 
 class TestPogoda(unittest.TestCase):
@@ -35,3 +38,17 @@ class TestPogoda(unittest.TestCase):
         q = session.query(User).filter(User.username == username)
         self.assertTrue(session.query(q.exists()).scalar(), 'fail')
         session.close()
+
+ # testy Magdy
+    def test_sprawdź_temperaturę(self):
+        result = pogoda.konwertuj_do_c(300)
+        self.assertEqual(result, "26.85")
+
+    def test_przywitaj(self):
+        result = powitanie("Ola")
+        self.assertEqual(result, "Witaj Ola")
+
+
+    def test_test2(self):
+        result = test2()
+        self.assertEqual(result, "hej hej hej razy ")
